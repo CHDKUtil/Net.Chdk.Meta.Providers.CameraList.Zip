@@ -70,6 +70,10 @@
       <Project>{a336d62c-4caf-4b19-9602-8ce0e51b4eb4}</Project>
       <Name>Net.Chdk.Meta.Providers.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Net.Chdk.Meta.Providers.Zip\src\Net.Chdk.Meta.Providers.Zip\Net.Chdk.Meta.Providers.Zip.csproj">
+      <Project>{E25D4E5A-692E-4CDE-A1B4-3FB121AB67FE}</Project>
+      <Name>Net.Chdk.Meta.Providers.Zip</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Net.Chdk.Model.Software\src\Net.Chdk.Model.Software\Net.Chdk.Model.Software.csproj">
       <Project>{7F492AD5-C9E5-4E13-9587-D0B88BA8D209}</Project>
       <Name>Net.Chdk.Model.Software</Name>

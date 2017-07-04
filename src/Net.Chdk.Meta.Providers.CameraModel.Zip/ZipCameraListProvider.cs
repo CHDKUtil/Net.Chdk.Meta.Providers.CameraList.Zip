@@ -1,30 +1,26 @@
 ﻿using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.Extensions.Logging;
+using Net.Chdk.Meta.Providers.Zip;
 using Net.Chdk.Model.Software;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Net.Chdk.Meta.Providers.CameraModel.Zip
 {
-    sealed class ZipCameraListProvider : ICameraListProvider
+    sealed class ZipCameraListProvider : ZipMetaProvider<SoftwareCameraInfo>, ICameraListProvider
     {
-        private ILogger Logger { get; }
         private ICameraMetaProvider CameraProvider { get; }
-        private string FileName { get; }
 
         public ZipCameraListProvider(ICameraMetaProvider cameraProvider, IBootMetaProvider bootProvider, ILogger<ZipCameraListProvider> logger)
+            : base(bootProvider, logger)
         {
-            Logger = logger;
             CameraProvider = cameraProvider;
-            FileName = bootProvider.FileName;
         }
 
         public IDictionary<string, IDictionary<string, string>> GetCameraList(Stream stream)
         {
             var cameraList = new SortedDictionary<string, IDictionary<string, string>>();
-            var cameras = GetCameras(stream, string.Empty);
+            var cameras = GetItems(stream, string.Empty);
             foreach (var camera in cameras)
             {
                 if (camera != null)
@@ -53,55 +49,7 @@ namespace Net.Chdk.Meta.Providers.CameraModel.Zip
             return revisions;
         }
 
-        private IEnumerable<SoftwareCameraInfo> GetCameras(Stream stream, string name)
-        {
-            using (var zip = new ZipFile(stream))
-            {
-                return GetCameras(zip, name).ToArray();
-            }
-        }
-
-        private IEnumerable<SoftwareCameraInfo> GetCameras(ZipFile zip, string name)
-        {
-            Logger.LogInformation("Enter {0}", name);
-            foreach (ZipEntry entry in zip)
-            {
-                var items = GetCameras(zip, entry);
-                foreach (var item in items)
-                    yield return item;
-                yield return GetCamera(zip, name, entry);
-            }
-            Logger.LogInformation("Exit {0}", name);
-        }
-
-        private IEnumerable<SoftwareCameraInfo> GetCameras(ZipFile zip, ZipEntry entry)
-        {
-            if (!entry.IsFile)
-                return Enumerable.Empty<SoftwareCameraInfo>();
-
-            var ext = Path.GetExtension(entry.Name);
-            if (!".zip".Equals(ext, StringComparison.OrdinalIgnoreCase))
-                return Enumerable.Empty<SoftwareCameraInfo>();
-
-            var name = Path.GetFileName(entry.Name);
-            using (var stream = zip.GetInputStream(entry))
-            {
-                return GetCameras(stream, name);
-            }
-        }
-
-        private SoftwareCameraInfo GetCamera(ZipFile zip, string name, ZipEntry entry)
-        {
-            if (!entry.IsFile)
-                return null;
-
-            if (!FileName.Equals(entry.Name, StringComparison.OrdinalIgnoreCase))
-                return null;
-
-            return DoGetCamera(zip, name, entry);
-        }
-
-        private SoftwareCameraInfo DoGetCamera(ZipFile zip, string name, ZipEntry entry)
+        protected override SoftwareCameraInfo DoGetItem(ZipFile zip, string name, ZipEntry entry)
         {
             return CameraProvider.GetCamera(name);
         }
