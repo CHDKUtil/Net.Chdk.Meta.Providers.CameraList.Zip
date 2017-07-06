@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.Extensions.Logging;
 using Net.Chdk.Meta.Model.CameraList;
+using Net.Chdk.Meta.Providers.CameraList;
 using Net.Chdk.Meta.Providers.Zip;
 using Net.Chdk.Model.Software;
 using System.Collections.Generic;

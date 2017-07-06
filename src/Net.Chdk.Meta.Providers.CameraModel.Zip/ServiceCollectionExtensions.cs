@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Net.Chdk.Meta.Providers.CameraList;
 
 namespace Net.Chdk.Meta.Providers.CameraModel.Zip
 {
