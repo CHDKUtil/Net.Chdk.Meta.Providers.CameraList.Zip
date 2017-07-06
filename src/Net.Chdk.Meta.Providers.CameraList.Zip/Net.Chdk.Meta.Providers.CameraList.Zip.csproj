@@ -7,8 +7,8 @@
     <ProjectGuid>{40880361-7411-49A0-8611-15587B826949}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Net.Chdk.Meta.Providers.CameraModel.Zip</RootNamespace>
-    <AssemblyName>Net.Chdk.Meta.Providers.CameraModel.Zip</AssemblyName>
+    <RootNamespace>Net.Chdk.Meta.Providers.CameraList.Zip</RootNamespace>
+    <AssemblyName>Net.Chdk.Meta.Providers.CameraList.Zip</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
