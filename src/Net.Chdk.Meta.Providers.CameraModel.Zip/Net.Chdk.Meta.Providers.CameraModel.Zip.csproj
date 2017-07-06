@@ -62,6 +62,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Net.Chdk.Meta.Model.Base\src\Net.Chdk.Meta.Model.Base\Net.Chdk.Meta.Model.Base.csproj">
+      <Project>{A4C2D557-E6C8-4B78-A5E8-3CDE0D175918}</Project>
+      <Name>Net.Chdk.Meta.Model.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Net.Chdk.Meta.Model.CameraList\src\Net.Chdk.Meta.Model.CameraList\Net.Chdk.Meta.Model.CameraList.csproj">
+      <Project>{3A3FBC22-E7C4-400E-AC54-63CD671044A6}</Project>
+      <Name>Net.Chdk.Meta.Model.CameraList</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Net.Chdk.Meta.Providers.CameraModel.Core\src\Net.Chdk.Meta.Providers.CameraModel.Core\Net.Chdk.Meta.Providers.CameraModel.Core.csproj">
       <Project>{7B156222-138C-4977-98D9-D14F1BD76016}</Project>
       <Name>Net.Chdk.Meta.Providers.CameraModel.Core</Name>

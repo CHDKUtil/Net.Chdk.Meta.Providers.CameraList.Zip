@@ -1,5 +1,6 @@
 ﻿using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.Extensions.Logging;
+using Net.Chdk.Meta.Model.CameraList;
 using Net.Chdk.Meta.Providers.Zip;
 using Net.Chdk.Model.Software;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace Net.Chdk.Meta.Providers.CameraModel.Zip
             CameraProvider = cameraProvider;
         }
 
-        public IDictionary<string, IDictionary<string, string>> GetCameraList(Stream stream)
+        public IDictionary<string, ListPlatformData> GetCameraList(Stream stream)
         {
-            var cameraList = new SortedDictionary<string, IDictionary<string, string>>();
+            var cameraList = new SortedDictionary<string, ListPlatformData>();
             var cameras = GetItems(stream, string.Empty);
             foreach (var camera in cameras)
             {
@@ -31,22 +32,55 @@ namespace Net.Chdk.Meta.Providers.CameraModel.Zip
             return cameraList;
         }
 
-        private static void AddCamera(IDictionary<string, IDictionary<string, string>> cameraList, string platform, string revision)
+        private static void AddCamera(IDictionary<string, ListPlatformData> cameras, string platform, string revision)
         {
             var revisionKey = GetRevisionKey(revision);
-            var revisions = GetOrAddRevisions(cameraList, platform);
-            revisions.Add(revisionKey, revision);
+            var platformData = GetOrAddPlatform(cameras, platform);
+            var revisionData = GetRevisionData(platform, revision, null);
+            platformData.Revisions.Add(revisionKey, revisionData);
         }
 
-        private static IDictionary<string, string> GetOrAddRevisions(IDictionary<string, IDictionary<string, string>> cameraList, string platform)
+        private static ListPlatformData GetOrAddPlatform(IDictionary<string, ListPlatformData> cameras, string platform)
         {
-            IDictionary<string, string> revisions;
-            if (!cameraList.TryGetValue(platform, out revisions))
+            ListPlatformData platformData;
+            if (!cameras.TryGetValue(platform, out platformData))
             {
-                revisions = new SortedDictionary<string, string>();
-                cameraList.Add(platform, revisions);
+                platformData = GetPlatformData();
+                cameras.Add(platform, platformData);
             }
-            return revisions;
+            return platformData;
+        }
+
+        private static ListPlatformData GetPlatformData()
+        {
+            return new ListPlatformData
+            {
+                Revisions = new SortedDictionary<string, ListRevisionData>()
+            };
+        }
+
+        private static ListRevisionData GetRevisionData(string platform, string revision, string source)
+        {
+            return new ListRevisionData
+            {
+                Source = GetSourceData(platform, revision, source)
+            };
+        }
+
+        private static ListSourceData GetSourceData(string platform, string revision, string source)
+        {
+            return new ListSourceData
+            {
+                Platform = platform,
+                Revision = GetRevision(revision, source)
+            };
+        }
+
+        private static string GetRevision(string revision, string source)
+        {
+            if (!string.IsNullOrEmpty(source))
+                return source;
+            return revision;
         }
 
         protected override SoftwareCameraInfo DoGetItem(ZipFile zip, string name, ZipEntry entry)
