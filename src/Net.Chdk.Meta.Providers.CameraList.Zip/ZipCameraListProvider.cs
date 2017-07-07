@@ -34,10 +34,9 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
 
         private static void AddCamera(IDictionary<string, ListPlatformData> cameras, string platform, string revision)
         {
-            var revisionKey = GetRevisionKey(revision);
             var platformData = GetOrAddPlatform(cameras, platform);
             var revisionData = GetRevisionData(platform, revision, null);
-            platformData.Revisions.Add(revisionKey, revisionData);
+            platformData.Revisions.Add(revision, revisionData);
         }
 
         private static ListPlatformData GetOrAddPlatform(IDictionary<string, ListPlatformData> cameras, string platform)
@@ -86,23 +85,6 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
         protected override SoftwareCameraInfo DoGetItem(ZipFile zip, string name, ZipEntry entry)
         {
             return CameraProvider.GetCamera(name);
-        }
-
-        private static string GetRevisionKey(string revisionStr)
-        {
-            var revision = GetFirmwareRevision(revisionStr);
-            return $"0x{revision:x}";
-        }
-
-        private static uint GetFirmwareRevision(string revision)
-        {
-            if (revision == null)
-                return 0;
-            return
-                (uint)((revision[0] - 0x30) << 24) +
-                (uint)((revision[1] - 0x30) << 20) +
-                (uint)((revision[2] - 0x30) << 16) +
-                (uint)((revision[3] - 0x60) << 8);
         }
     }
 }
