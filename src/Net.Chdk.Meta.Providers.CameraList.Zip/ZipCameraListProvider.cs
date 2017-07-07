@@ -26,16 +26,16 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
             {
                 if (camera != null)
                 {
-                    AddCamera(cameraList, camera.Platform, camera.Revision);
+                    AddCamera(cameraList, camera.Platform, camera.Revision, null);
                 }
             }
             return cameraList;
         }
 
-        private static void AddCamera(IDictionary<string, ListPlatformData> cameras, string platform, string revision)
+        private static void AddCamera(IDictionary<string, ListPlatformData> cameras, string platform, string revision, string source)
         {
             var platformData = GetOrAddPlatform(cameras, platform);
-            var revisionData = GetRevisionData(platform, revision, null);
+            var revisionData = GetRevisionData(platform, revision, source);
             platformData.Revisions.Add(revision, revisionData);
         }
 
