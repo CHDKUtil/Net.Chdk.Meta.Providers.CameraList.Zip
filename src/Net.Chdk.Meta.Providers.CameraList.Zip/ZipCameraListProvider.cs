@@ -2,12 +2,11 @@
 using Microsoft.Extensions.Logging;
 using Net.Chdk.Meta.Model.CameraList;
 using Net.Chdk.Meta.Providers.Zip;
-using Net.Chdk.Model.Software;
 using System.Collections.Generic;
 
 namespace Net.Chdk.Meta.Providers.CameraList.Zip
 {
-    sealed class ZipCameraListProvider : ZipMetaProvider<SoftwareCameraInfo>, ICameraListProvider
+    sealed class ZipCameraListProvider : ZipMetaProvider<CameraInfo>, ICameraListProvider
     {
         private ICameraMetaProvider CameraProvider { get; }
 
@@ -81,7 +80,7 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
             return revision;
         }
 
-        protected override SoftwareCameraInfo DoGetItem(ZipFile zip, string name, ZipEntry entry)
+        protected override CameraInfo DoGetItem(ZipFile zip, string name, ZipEntry entry)
         {
             return CameraProvider.GetCamera(name);
         }
