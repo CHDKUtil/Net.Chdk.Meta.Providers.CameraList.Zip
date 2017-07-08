@@ -4,7 +4,6 @@ using Net.Chdk.Meta.Model.CameraList;
 using Net.Chdk.Meta.Providers.Zip;
 using Net.Chdk.Model.Software;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Net.Chdk.Meta.Providers.CameraList.Zip
 {
@@ -30,14 +29,6 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
                 }
             }
             return cameraList;
-        }
-
-        private IEnumerable<SoftwareCameraInfo> GetItems(string path)
-        {
-            using (var stream = File.OpenRead(path))
-            {
-                return GetItems(stream, string.Empty);
-            }
         }
 
         private static void AddCamera(IDictionary<string, ListPlatformData> cameras, string platform, string revision, string source)
