@@ -18,10 +18,10 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
             CameraProvider = cameraProvider;
         }
 
-        public IDictionary<string, ListPlatformData> GetCameraList(Stream stream)
+        public IDictionary<string, ListPlatformData> GetCameraList(string path)
         {
             var cameraList = new SortedDictionary<string, ListPlatformData>();
-            var cameras = GetItems(stream, string.Empty);
+            var cameras = GetItems(path);
             foreach (var camera in cameras)
             {
                 if (camera != null)
@@ -30,6 +30,14 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
                 }
             }
             return cameraList;
+        }
+
+        private IEnumerable<SoftwareCameraInfo> GetItems(string path)
+        {
+            using (var stream = File.OpenRead(path))
+            {
+                return GetItems(stream, string.Empty);
+            }
         }
 
         private static void AddCamera(IDictionary<string, ListPlatformData> cameras, string platform, string revision, string source)
