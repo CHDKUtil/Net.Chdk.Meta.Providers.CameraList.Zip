@@ -68,7 +68,6 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
         {
             return new ListSourceData
             {
-                Platform = platform,
                 Revision = GetRevision(revision, source)
             };
         }
