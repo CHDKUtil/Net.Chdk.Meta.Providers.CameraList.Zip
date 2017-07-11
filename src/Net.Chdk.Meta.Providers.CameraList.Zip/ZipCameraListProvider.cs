@@ -16,10 +16,10 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
             CameraProvider = cameraProvider;
         }
 
-        public IDictionary<string, ListPlatformData> GetCameraList(string path)
+        public IDictionary<string, ListPlatformData> GetCameraList(string path, string productName)
         {
             var cameraList = new SortedDictionary<string, ListPlatformData>();
-            var cameras = GetItems(path);
+            var cameras = GetItems(path, productName);
             foreach (var camera in cameras)
             {
                 if (camera != null)
