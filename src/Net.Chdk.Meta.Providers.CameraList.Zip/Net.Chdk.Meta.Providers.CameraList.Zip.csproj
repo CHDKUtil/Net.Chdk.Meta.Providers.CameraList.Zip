@@ -47,6 +47,9 @@
     <Reference Include="Net.Chdk.Meta.Model.CameraList, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Net.Chdk.Meta.Model.CameraList.0.1.0-alpha\lib\netstandard1.0\Net.Chdk.Meta.Model.CameraList.dll</HintPath>
     </Reference>
+    <Reference Include="Net.Chdk.Providers.Boot.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Net.Chdk.Providers.Boot.Core.0.1.0-alpha\lib\netstandard1.0\Net.Chdk.Providers.Boot.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />

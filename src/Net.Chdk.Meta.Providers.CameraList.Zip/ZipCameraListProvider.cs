@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Net.Chdk.Meta.Model.CameraList;
 using Net.Chdk.Meta.Providers.Zip;
+using Net.Chdk.Providers.Boot;
 using System.Collections.Generic;
 
 namespace Net.Chdk.Meta.Providers.CameraList.Zip
@@ -10,16 +11,16 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
     {
         private ICameraMetaProvider CameraProvider { get; }
 
-        public ZipCameraListProvider(ICameraMetaProvider cameraProvider, IBootMetaProvider bootProvider, ILogger<ZipCameraListProvider> logger)
+        public ZipCameraListProvider(ICameraMetaProvider cameraProvider, IBootProvider bootProvider, ILogger<ZipCameraListProvider> logger)
             : base(bootProvider, logger)
         {
             CameraProvider = cameraProvider;
         }
 
-        public IDictionary<string, ListPlatformData> GetCameraList(string path, string productName)
+        public IDictionary<string, ListPlatformData> GetCameraList(string path, string categoryName)
         {
             var cameraList = new SortedDictionary<string, ListPlatformData>();
-            var cameras = GetItems(path, productName);
+            var cameras = GetItems(path, categoryName);
             foreach (var camera in cameras)
             {
                 if (camera != null)
