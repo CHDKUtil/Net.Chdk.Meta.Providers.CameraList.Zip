@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Net.Chdk.Meta.Providers.CameraList.Zip
 {
-    sealed class ZipCameraListProvider : ZipMetaProvider<CameraInfo>, ICameraListProvider
+    sealed class ZipCameraListProvider : ZipMetaProvider<CameraInfo>, IInnerCameraListProvider
     {
         private ICameraMetaProvider CameraProvider { get; }
 

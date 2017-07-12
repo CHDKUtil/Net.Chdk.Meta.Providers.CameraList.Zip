@@ -7,7 +7,7 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
         public static IServiceCollection AddZipCameraListProvider(this IServiceCollection serviceCollection)
         {
             return serviceCollection
-                .AddSingleton<ICameraListProvider, ZipCameraListProvider>();
+                .AddSingleton<IInnerCameraListProvider, ZipCameraListProvider>();
         }
     }
 }
