@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Net.Chdk.Meta.Model.CameraList;
 using Net.Chdk.Meta.Providers.Zip;
 using Net.Chdk.Providers.Boot;
+using Net.Chdk.Providers.Product;
 using System.Collections.Generic;
 
 namespace Net.Chdk.Meta.Providers.CameraList.Zip
@@ -11,16 +12,16 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
     {
         private ICameraMetaProvider CameraProvider { get; }
 
-        public ZipCameraListProvider(ICameraMetaProvider cameraProvider, IBootProvider bootProvider, ILogger<ZipCameraListProvider> logger)
-            : base(bootProvider, logger)
+        public ZipCameraListProvider(ICameraMetaProvider cameraProvider, IProductProvider productProvider, IBootProvider bootProvider, ILogger<ZipCameraListProvider> logger)
+            : base(productProvider, bootProvider, logger)
         {
             CameraProvider = cameraProvider;
         }
 
-        public IDictionary<string, ListPlatformData> GetCameraList(string path, string categoryName)
+        public IDictionary<string, ListPlatformData> GetCameraList(string path, string productName)
         {
             var cameraList = new SortedDictionary<string, ListPlatformData>();
-            var cameras = GetItems(path, categoryName);
+            var cameras = GetItems(path, productName);
             foreach (var camera in cameras)
             {
                 if (camera != null)
@@ -80,9 +81,9 @@ namespace Net.Chdk.Meta.Providers.CameraList.Zip
             return revision;
         }
 
-        protected override CameraInfo DoGetItem(ZipFile zip, string name, ZipEntry entry)
+        protected override CameraInfo DoGetItem(ZipFile zip, string fileName, string productName, ZipEntry entry)
         {
-            return CameraProvider.GetCamera(name);
+            return CameraProvider.GetCamera(productName, fileName);
         }
     }
 }
