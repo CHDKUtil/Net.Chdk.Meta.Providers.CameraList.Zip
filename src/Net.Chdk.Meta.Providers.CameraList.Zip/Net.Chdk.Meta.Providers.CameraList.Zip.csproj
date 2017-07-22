@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.2.1</Version>
+    <Version>0.3.0</Version>
     <Product>CHIMP</Product>
     <Authors>Dmitry Shechtman</Authors>
     <Copyright>Copyright © 2017 Dmitry Shechtman</Copyright>
@@ -36,8 +36,8 @@
 
   <ItemGroup>
     <PackageReference Include="microsoft.extensions.dependencyinjection.abstractions" Version="1.1.1" />
-    <PackageReference Include="Net.Chdk.Meta.Providers.CameraList.Core" Version="0.2.0-alpha" />
-    <PackageReference Include="Net.Chdk.Meta.Providers.Zip" Version="0.2.0-alpha" />
+    <PackageReference Include="Net.Chdk.Meta.Providers.CameraList.Core" Version="0.3.0-alpha" />
+    <PackageReference Include="Net.Chdk.Meta.Providers.Zip" Version="0.3.0-alpha" />
   </ItemGroup>
 
 </Project>
